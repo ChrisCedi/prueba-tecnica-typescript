@@ -2,9 +2,14 @@ import { type User } from "../types";
 interface Props {
   users: User[];
   showColors: boolean;
+  deleteUser: (uuid: string) => void;
 }
 
-export const UserTable: React.FC<Props> = ({ showColors, users }) => {
+export const UserTable: React.FC<Props> = ({
+  showColors,
+  users,
+  deleteUser,
+}) => {
   return (
     <table width="100%">
       <thead>
@@ -22,7 +27,7 @@ export const UserTable: React.FC<Props> = ({ showColors, users }) => {
           const color = showColors ? backgroundColor : "transparent";
 
           return (
-            <tr key={index} style={{ backgroundColor: color }}>
+            <tr key={user.login.uuid} style={{ backgroundColor: color }}>
               <td>
                 <img src={user.picture.medium} />
               </td>
@@ -30,7 +35,9 @@ export const UserTable: React.FC<Props> = ({ showColors, users }) => {
               <td>{user.name.last}</td>
               <td>{user.location.country}</td>
               <td>
-                <button>Borrar</button>
+                <button onClick={() => deleteUser(user.login.uuid)}>
+                  Borrar
+                </button>
               </td>
             </tr>
           );
